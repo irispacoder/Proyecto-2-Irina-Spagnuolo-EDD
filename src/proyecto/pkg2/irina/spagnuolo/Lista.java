@@ -56,7 +56,30 @@ public class Lista<T> {
         return false;
     }
     
-    //aun me falta eliminar, creo que recorreor y el metodo que me muestre todos los nodos :\
+    public boolean eliminar(T dato){
+        if (this.esVacia()) {
+           return false; 
+        }
+        
+        if (head.getDato().equals(dato)) {
+            head = head.getNext();
+            size--;
+            return true;
+        }
+        
+        Nodo<T> actual = this.head;
+        while (actual.getNext() != null) {
+            if(actual.getNext().getDato().equals(dato)){
+                actual.setNext(actual.getNext().getNext());
+                size--;
+                return true;
+            }
+            actual = actual.getNext();
+        }
+        return false;
+    }
+    
+   
     
     
     
