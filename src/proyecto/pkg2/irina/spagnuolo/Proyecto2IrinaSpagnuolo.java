@@ -6,7 +6,7 @@ package proyecto.pkg2.irina.spagnuolo;
 
 /**
  *
- * @author Adriana
+ *
  */
 public class Proyecto2IrinaSpagnuolo {
 
