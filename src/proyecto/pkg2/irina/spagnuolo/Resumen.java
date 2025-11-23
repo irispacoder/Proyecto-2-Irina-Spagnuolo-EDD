@@ -61,7 +61,7 @@ public class Resumen {
      */
     public void setResumen(String resumen) {
         this.resumen = resumen;
-    }
+    } 
 
     /**
      * @return the keyword
