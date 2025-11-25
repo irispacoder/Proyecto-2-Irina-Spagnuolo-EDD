@@ -6,15 +6,17 @@ package proyecto.pkg2.irina.spagnuolo;
 
 /**
  *
- * @author Adriana
+ * 
  */
 public class Interfaz extends javax.swing.JFrame {
+    private HashTable newTablaHash;
 
     /**
      * Creates new form Interfaz
      */
     public Interfaz() {
         initComponents();
+        newTablaHash = new HashTable(20);
     }
 
     /**
@@ -26,21 +28,110 @@ public class Interfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        BotonAgregar = new javax.swing.JButton();
+        BotonAnalizar = new javax.swing.JButton();
+        Field1 = new javax.swing.JTextField();
+        BotonBuscarPC = new javax.swing.JButton();
+        Field2 = new javax.swing.JTextField();
+        BotonBucarAutor = new javax.swing.JButton();
+        BotonMPC = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("Proyecto 2");
+
+        BotonAgregar.setBackground(new java.awt.Color(255, 204, 51));
+        BotonAgregar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        BotonAgregar.setText("Agregar");
+        BotonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAgregarActionPerformed(evt);
+            }
+        });
+
+        BotonAnalizar.setBackground(new java.awt.Color(255, 204, 51));
+        BotonAnalizar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        BotonAnalizar.setText("Analizar");
+
+        BotonBuscarPC.setBackground(new java.awt.Color(255, 153, 0));
+        BotonBuscarPC.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        BotonBuscarPC.setText("Buscar");
+
+        BotonBucarAutor.setBackground(new java.awt.Color(255, 153, 0));
+        BotonBucarAutor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        BotonBucarAutor.setText("Buscar");
+
+        BotonMPC.setBackground(new java.awt.Color(255, 153, 102));
+        BotonMPC.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        BotonMPC.setText("Mostrar palabras clave");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Field1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BotonBuscarPC))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BotonAgregar)
+                                .addGap(18, 18, 18)
+                                .addComponent(BotonAnalizar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Field2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BotonBucarAutor))
+                            .addComponent(BotonMPC))))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BotonAgregar)
+                        .addComponent(BotonAnalizar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(45, 45, 45)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Field1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonBuscarPC))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Field2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonBucarAutor))
+                .addGap(47, 47, 47)
+                .addComponent(BotonMPC)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BotonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarActionPerformed
+        AgregarResumen agregarR = new AgregarResumen(newTablaHash);
+        agregarR.cargarArchivo();
+    }//GEN-LAST:event_BotonAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +169,14 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonAgregar;
+    private javax.swing.JButton BotonAnalizar;
+    private javax.swing.JButton BotonBucarAutor;
+    private javax.swing.JButton BotonBuscarPC;
+    private javax.swing.JButton BotonMPC;
+    private javax.swing.JTextField Field1;
+    private javax.swing.JTextField Field2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
