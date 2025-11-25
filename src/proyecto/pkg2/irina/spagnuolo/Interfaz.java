@@ -4,6 +4,8 @@
  */
 package proyecto.pkg2.irina.spagnuolo;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * 
@@ -17,6 +19,28 @@ public class Interfaz extends javax.swing.JFrame {
     public Interfaz() {
         initComponents();
         newTablaHash = new HashTable(20);
+    }
+    
+    private void ordenarTitulosABC(String[] titulos) {
+        for (int i = 0; i < titulos.length - 1; i++) {
+            for (int j = 0; j < titulos.length - i - 1; j++) {
+                if (titulos[j].compareToIgnoreCase(titulos[j + 1]) > 0) {
+                    String temp = titulos[j];
+                    titulos[j] = titulos[j + 1];
+                    titulos[j + 1] = temp;
+                }
+            }
+        }
+    }
+    
+    private int contarFrecuencia(String texto, String palabra) {
+        int contador = 0;
+        int index = 0;
+        while ((index = texto.indexOf(palabra, index)) != -1) {
+            contador++;
+            index += palabra.length();
+        }
+        return contador;
     }
 
     /**
@@ -56,6 +80,11 @@ public class Interfaz extends javax.swing.JFrame {
         BotonAnalizar.setBackground(new java.awt.Color(255, 204, 51));
         BotonAnalizar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         BotonAnalizar.setText("Analizar");
+        BotonAnalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAnalizarActionPerformed(evt);
+            }
+        });
 
         BotonBuscarPC.setBackground(new java.awt.Color(255, 153, 0));
         BotonBuscarPC.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -86,18 +115,21 @@ public class Interfaz extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Field1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(BotonBuscarPC))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(BotonAgregar)
                                 .addGap(18, 18, 18)
                                 .addComponent(BotonAnalizar))
+                            .addComponent(BotonMPC)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Field2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Field2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(BotonBucarAutor))
-                            .addComponent(BotonMPC))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Field1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BotonBuscarPC)))))
                 .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -132,6 +164,55 @@ public class Interfaz extends javax.swing.JFrame {
         AgregarResumen agregarR = new AgregarResumen(newTablaHash);
         agregarR.cargarArchivo();
     }//GEN-LAST:event_BotonAgregarActionPerformed
+
+    private void BotonAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAnalizarActionPerformed
+        String[] titulos = newTablaHash.obtenerTitulos();
+        if (titulos.length == 0) {
+            JOptionPane.showMessageDialog(this, "No hay investigaciones guardadas.");
+            return;
+        }
+
+        ordenarTitulosABC(titulos);
+
+        String seleccion = (String) JOptionPane.showInputDialog(
+            this,
+            "Seleccione la investigación a analizar:",
+            "Analizar investigación",
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            titulos,
+            titulos[0]);
+
+        if (seleccion == null) return;
+
+        Resumen resumen = newTablaHash.buscarElem(seleccion);
+        if (resumen == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el resumen.");
+            return;
+        }
+
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("Nombre del trabajo: ").append(resumen.getTitulo()).append("\n");
+        resultado.append("Autores: ");
+        String[] autores = resumen.getAutores();
+        for (int i = 0; i < autores.length; i++) {
+            resultado.append(autores[i]);
+            if (i < autores.length - 1) resultado.append(", ");
+        }
+        resultado.append("\n\n");
+
+        String cuerpo = resumen.getResumen().toLowerCase();
+        String[] palabrasClave = resumen.getKeyword();
+
+        for (int i = 0; i < palabrasClave.length; i++) {
+            int frecuencia = contarFrecuencia(cuerpo, palabrasClave[i].toLowerCase());
+            resultado.append(palabrasClave[i]).append(": aparece ")
+                     .append(frecuencia).append(" veces\n");
+        }
+
+        JOptionPane.showMessageDialog(this, resultado.toString(), "Análisis", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_BotonAnalizarActionPerformed
 
     /**
      * @param args the command line arguments

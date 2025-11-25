@@ -96,6 +96,21 @@ public class HashTable {
         }
         return todos;
     }
+    
+    public String[] obtenerTitulos() {
+        String[] titulos = new String[tamaño];
+        int index = 0;
+
+        for (int i = 0; i < capacidad; i++) {
+            Nodo actual = tabla[i].getHead();
+            while (actual != null) {
+                Resumen resumen = (Resumen) actual.getDato();
+                titulos[index++] = resumen.getTitulo();
+                actual = actual.getNext();
+            }
+        }
+        return titulos;
+    }
 
     private boolean compararTitulos(String titulo1, String titulo2) {
         if (titulo1 == null && titulo2 == null) return true;

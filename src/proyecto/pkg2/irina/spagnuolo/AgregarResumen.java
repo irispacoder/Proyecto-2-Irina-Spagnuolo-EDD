@@ -93,7 +93,7 @@ public class AgregarResumen {
                 autoresFinales[i] = autores[i];
             }
             
-            Resumen resumen = new Resumen(titulo, autoresFinales, cuerpo.toString().trim(), palabrasClave);
+            Resumen resumen = new Resumen(tituloNormal, autoresFinales, cuerpo.toString().trim(), palabrasClave);
             tablaHash.agregarElem(resumen);
 
             JOptionPane.showMessageDialog(null, "Resumen agregado correctamente:\n" + titulo);
