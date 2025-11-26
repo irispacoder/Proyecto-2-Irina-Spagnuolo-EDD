@@ -122,4 +122,13 @@ public class HashTable {
         }
         return true;
     }
+    
+    public void insertar(String clave, Object valor){
+        int indice = fHash(clave);
+    }
+    
+    public Object buscar(String clave){
+        int indice = fHash(clave);
+        return null;
+    }
 }

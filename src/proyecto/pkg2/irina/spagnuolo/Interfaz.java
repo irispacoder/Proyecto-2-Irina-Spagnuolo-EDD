@@ -12,13 +12,17 @@ import javax.swing.JOptionPane;
  */
 public class Interfaz extends javax.swing.JFrame {
     private HashTable newTablaHash;
+    private ArbolPalabrasAVL newArbolPalabras;
+    private HashTable tablaPalabrasClave;
 
     /**
      * Creates new form Interfaz
      */
     public Interfaz() {
         initComponents();
-        newTablaHash = new HashTable(20);
+        newTablaHash = new HashTable(200);
+        newArbolPalabras = new ArbolPalabrasAVL();
+        tablaPalabrasClave = new HashTable(400);
     }
     
     private void ordenarTitulosABC(String[] titulos) {
@@ -89,6 +93,11 @@ public class Interfaz extends javax.swing.JFrame {
         BotonBuscarPC.setBackground(new java.awt.Color(255, 153, 0));
         BotonBuscarPC.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         BotonBuscarPC.setText("Buscar");
+        BotonBuscarPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonBuscarPCActionPerformed(evt);
+            }
+        });
 
         BotonBucarAutor.setBackground(new java.awt.Color(255, 153, 0));
         BotonBucarAutor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -161,8 +170,16 @@ public class Interfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarActionPerformed
-        AgregarResumen agregarR = new AgregarResumen(newTablaHash);
-        agregarR.cargarArchivo();
+
+    AgregarResumen agregarR = new AgregarResumen(newTablaHash);
+
+    Resumen resumen = agregarR.cargarArchivo();
+    if (resumen == null) return;
+
+    newTablaHash.agregarElem(resumen);
+
+    JOptionPane.showMessageDialog(this, "Resumen agregado correctamente.");
+        
     }//GEN-LAST:event_BotonAgregarActionPerformed
 
     private void BotonAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAnalizarActionPerformed
@@ -213,6 +230,84 @@ public class Interfaz extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, resultado.toString(), "Análisis", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_BotonAnalizarActionPerformed
+
+    private void BotonBuscarPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarPCActionPerformed
+    String palabraBuscada = JOptionPane.showInputDialog(
+        this, 
+        "Ingrese la palabra clave para buscar una investigación:",  
+        JOptionPane.QUESTION_MESSAGE);
+
+    if (palabraBuscada == null || palabraBuscada.trim().isEmpty()) return;
+
+    String claveEstandarizada = palabraBuscada.trim().toLowerCase();
+
+    // Recorremos todos los resúmenes guardados en newTablaHash
+    Lista todos = newTablaHash.obtenerTodos();
+    Nodo actual = todos.getHead();
+    Lista titulosEncontrados = new Lista();
+
+    while (actual != null) {
+        Resumen resumen = (Resumen) actual.getDato();
+        String[] keywords = resumen.getKeyword();
+        for (String kw : keywords) {
+            if (kw.toLowerCase().trim().equals(claveEstandarizada)) {
+                titulosEncontrados.addFinal(resumen.getTitulo());
+                break; // ya lo encontramos en este resumen
+            }
+        }
+        actual = actual.getNext();
+    }
+
+    if (titulosEncontrados.esVacia()) {
+        JOptionPane.showMessageDialog(this, 
+            "No se encontraron investigaciones con la palabra clave: " + palabraBuscada);
+        return;
+    }
+
+    // Convertir lista en arreglo
+    int cantidad = titulosEncontrados.getSize();
+    String[] titulosArray = new String[cantidad];
+    Nodo nodo = titulosEncontrados.getHead();
+    int i = 0;
+    while (nodo != null) {
+        titulosArray[i++] = (String) nodo.getDato();
+        nodo = nodo.getNext();
+    }
+
+    // Selección
+    String tituloSeleccionado = (cantidad > 1)
+        ? (String) JOptionPane.showInputDialog(this,
+            "La palabra '" + palabraBuscada + "' aparece en " + cantidad + " investigaciones.\nSeleccione una:",
+            "Resultados de Búsqueda",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            titulosArray,
+            titulosArray[0])
+        : titulosArray[0];
+
+    if (tituloSeleccionado == null) return;
+
+    // Buscar resumen completo por título
+    Resumen resumen = newTablaHash.buscarElem(tituloSeleccionado);
+    if (resumen == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró el resumen para el título seleccionado.");
+        return;
+    }
+
+    // Mostrar detalles
+    StringBuilder detalle = new StringBuilder();
+    detalle.append("Título: ").append(resumen.getTitulo()).append("\n");
+    detalle.append("Autores: ");
+    String[] autores = resumen.getAutores();
+    for (int j = 0; j < autores.length; j++) {
+        detalle.append(autores[j]);
+        if (j < autores.length - 1) detalle.append(", ");
+    }
+    detalle.append("\n\nResumen:\n").append(resumen.getResumen());
+
+    JOptionPane.showMessageDialog(this, detalle.toString(), 
+        "Detalles", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_BotonBuscarPCActionPerformed
 
     /**
      * @param args the command line arguments

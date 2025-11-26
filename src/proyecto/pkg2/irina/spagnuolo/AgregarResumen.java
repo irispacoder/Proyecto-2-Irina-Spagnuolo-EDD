@@ -17,18 +17,19 @@ public class AgregarResumen {
         this.tablaHash = tablaHash;
     }
     
-    public void cargarArchivo(){
+    public Resumen cargarArchivo(){
         JFileChooser fileC = new JFileChooser();
         fileC.setDialogTitle("Seleccione un archivo de resumen (que sea un .txt)");
         int resultado = fileC.showOpenDialog(null);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = fileC.getSelectedFile();
-            procesarArchivo(archivo);
+            return procesarArchivo(archivo);
         }
+        return null;
     }
     
     
-    private void procesarArchivo(File archivo){
+    private Resumen procesarArchivo(File archivo){
         try(BufferedReader br = new BufferedReader(new FileReader(archivo))){
             String linea;
             String titulo = null;
@@ -41,14 +42,14 @@ public class AgregarResumen {
             
             if (titulo == null || titulo.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Formato inválido: falta el titulo");
-                return;
+                return null;
             }
             
             String tituloNormal = titulo.trim().toLowerCase();
 
             if (tablaHash.contiene(tituloNormal)) {
                 JOptionPane.showMessageDialog(null, "El resumen con el título \"" + titulo + "\" ya ha sido guardado previamente");
-                return;
+                return null;
             }
             
             boolean seccionAutores = false;
@@ -65,7 +66,7 @@ public class AgregarResumen {
             }
             if (!seccionAutores || contadorA == 0) {
                 JOptionPane.showMessageDialog(null, "Formato inválido: falta la sección de autores");
-                return;
+                return null;
             }
             
             boolean seccionResumen = (linea != null && linea.equalsIgnoreCase("Resumen"));
@@ -74,7 +75,7 @@ public class AgregarResumen {
             }
             if (!seccionResumen || cuerpo.length() == 0) {
                 JOptionPane.showMessageDialog(null, "Formato inválido: falta la sección de resumen");
-                return;
+                return null;
             }
             
             if (linea != null && linea.startsWith("Palabras claves:")) {
@@ -85,7 +86,7 @@ public class AgregarResumen {
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Formato inválido: falta la sección de palabras claves");
-                return;
+                return null;
             }
             
             String[] autoresFinales = new String[contadorA];
@@ -97,9 +98,11 @@ public class AgregarResumen {
             tablaHash.agregarElem(resumen);
 
             JOptionPane.showMessageDialog(null, "Resumen agregado correctamente:\n" + titulo);
+            return resumen;
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al leer el archivo: " + e.getMessage());
+            return null;
         }
     }
 }

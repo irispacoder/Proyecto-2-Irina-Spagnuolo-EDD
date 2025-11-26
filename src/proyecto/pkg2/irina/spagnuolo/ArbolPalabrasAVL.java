@@ -55,6 +55,7 @@ public class ArbolPalabrasAVL {
     }
 
     public void insertarOActualizar(String palabra, String claveResumen) {
+        palabra = palabra.toLowerCase().trim();
         this.raiz = insertarRecursivo(this.raiz, palabra, claveResumen);
     }
 
@@ -106,6 +107,21 @@ public class ArbolPalabrasAVL {
         if (cmp == 0) return true;
         if (cmp < 0) return buscarRecursivo(nodo.getHijoIZ(), palabra);
         else return buscarRecursivo(nodo.getHijoDE(), palabra);
+    }
+    
+    public String[] getTitulosPorPalabra(String palabra) {
+        palabra = palabra.toLowerCase().trim();
+        NodoPClave nodo = buscarNodo(raiz, palabra);
+        if (nodo == null) return new String[0];
+        return nodo.getTitulos(); 
+    }
+    
+    private NodoPClave buscarNodo(NodoPClave actual, String palabra) {
+        if (actual == null) return null;
+        int cmp = comparadorEspanol.compare(palabra, actual.getpClave());
+        if (cmp == 0) return actual;
+        if (cmp < 0) return buscarNodo(actual.getHijoIZ(), palabra);
+        else return buscarNodo(actual.getHijoDE(), palabra);
     }
     
     public void inOrden(){

@@ -125,4 +125,25 @@ public class ArbolAVLAutores {
             recorrerInordenRecursivo(nodo.getHijoDerecho());
         }
     }
+
+    public String[] inOrdenArray() {
+        int total = contarAutores(raiz);
+        String[] autores = new String[total];
+        llenarArrayInOrden(raiz, autores, new int[]{0}); // usamos un índice mutable
+        return autores;
+    
+    }
+    
+    private int contarAutores(Autores nodo) {
+        if (nodo == null) return 0;
+        return 1 + contarAutores(nodo.getHijoIzquierdo()) + contarAutores(nodo.getHijoDerecho());
+    }
+    
+    private void llenarArrayInOrden(Autores nodo, String[] autores, int[] index) {
+        if (nodo != null) {
+            llenarArrayInOrden(nodo.getHijoIzquierdo(), autores, index);
+            autores[index[0]++] = nodo.getNombreAutor();
+            llenarArrayInOrden(nodo.getHijoDerecho(), autores, index);
+        }
+    }    
 }

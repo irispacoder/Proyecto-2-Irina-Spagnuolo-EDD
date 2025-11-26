@@ -41,6 +41,18 @@ public class NodoPClave {
         this.frecuenciaLista.addFinal(nuevaFrecuencia);
     
     }
+    
+    public String[] getTitulos() {
+        int count = frecuenciaLista.getSize();
+        String[] titulos = new String[count];
+        int i = 0;
+        Nodo<Frecuencia> actual = frecuenciaLista.getHead();
+        while (actual != null) {
+            titulos[i++] = actual.getDato().getClaveResumen();
+            actual = actual.getNext();
+        }
+        return titulos;
+    }
 
     /**
      * @return the pClave
