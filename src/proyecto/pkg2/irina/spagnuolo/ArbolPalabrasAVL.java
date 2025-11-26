@@ -133,6 +133,39 @@ public class ArbolPalabrasAVL {
             inOrdenRecursivo(Nodo.getHijoDE());
         }
     }
+    
+    public String[] inOrdenArray() {
+        int total = contarPalabras(raiz);
+        String[] palabras = new String[total];
+        llenarArrayInOrden(raiz, palabras, new int[]{0});
+        return palabras;
+    }
+
+    private int contarPalabras(NodoPClave nodo) {
+        if (nodo == null) return 0;
+        return 1 + contarPalabras(nodo.getHijoIZ()) + contarPalabras(nodo.getHijoDE());
+    }
+
+    private void llenarArrayInOrden(NodoPClave nodo, String[] palabras, int[] index) {
+        if (nodo != null) {
+            llenarArrayInOrden(nodo.getHijoIZ(), palabras, index);
+            palabras[index[0]++] = nodo.getpClave();
+            llenarArrayInOrden(nodo.getHijoDE(), palabras, index);
+        }
+    }
+
+    public Lista buscarResúmenes(String palabra) {
+        NodoPClave nodo = buscarRec(raiz, palabra);
+        return (nodo == null) ? null : nodo.getFrecuenciaLista();
+    }
+
+    private NodoPClave buscarRec(NodoPClave nodo, String palabra) {
+        if (nodo == null) return null;
+        int cmp = comparadorEspanol.compare(palabra, nodo.getpClave());
+        if (cmp == 0) return nodo;
+        if (cmp < 0) return buscarRec(nodo.getHijoIZ(), palabra);
+        else return buscarRec(nodo.getHijoDE(), palabra);
+    }
 }
 
     

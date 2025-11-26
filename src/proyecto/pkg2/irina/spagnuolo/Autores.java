@@ -23,6 +23,10 @@ public class Autores {
         this.resumenes = new Lista<>();
         this.resumenes.addFinal(resumen);
     }
+    
+    public void addResumen(Resumen resumen){
+        this.resumenes.addFinal(resumen);
+    }
 
     /**
      * @return the nombreAutor
@@ -95,10 +99,6 @@ public class Autores {
     }
     
     
-    public void addResumen(Resumen resumen){
-        if (!resumenes.searchElem(resumen)) {
-            resumenes.addFinal(resumen);
-        }
-    }
+    
     
 }

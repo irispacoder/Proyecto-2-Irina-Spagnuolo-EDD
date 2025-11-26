@@ -145,5 +145,21 @@ public class ArbolAVLAutores {
             autores[index[0]++] = nodo.getNombreAutor();
             llenarArrayInOrden(nodo.getHijoDerecho(), autores, index);
         }
-    }    
+    }
+    
+    public Lista buscarTitulos(String autor) {
+        Autores nodo = buscar(autor);
+        if (nodo == null) return null;
+
+        Lista titulos = new Lista();
+        Nodo actual = nodo.getResumenes().getHead();
+        while (actual != null) {
+            Resumen resumen = (Resumen) actual.getDato();
+            titulos.addFinal(resumen.getTitulo());
+            actual = actual.getNext();
+        }
+        return titulos;
+    }
+
+    
 }

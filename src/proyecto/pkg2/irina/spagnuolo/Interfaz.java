@@ -4,6 +4,9 @@
  */
 package proyecto.pkg2.irina.spagnuolo;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,6 +17,8 @@ public class Interfaz extends javax.swing.JFrame {
     private HashTable newTablaHash;
     private ArbolPalabrasAVL newArbolPalabras;
     private HashTable tablaPalabrasClave;
+    private ArbolAVLAutores arbolAutores;
+    private ArbolPalabrasAVL arbolPalabras;
 
     /**
      * Creates new form Interfaz
@@ -23,6 +28,8 @@ public class Interfaz extends javax.swing.JFrame {
         newTablaHash = new HashTable(200);
         newArbolPalabras = new ArbolPalabrasAVL();
         tablaPalabrasClave = new HashTable(400);
+        arbolAutores = new ArbolAVLAutores();
+        arbolPalabras = new ArbolPalabrasAVL();
     }
     
     private void ordenarTitulosABC(String[] titulos) {
@@ -60,11 +67,14 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         BotonAgregar = new javax.swing.JButton();
         BotonAnalizar = new javax.swing.JButton();
-        Field1 = new javax.swing.JTextField();
         BotonBuscarPC = new javax.swing.JButton();
-        Field2 = new javax.swing.JTextField();
         BotonBucarAutor = new javax.swing.JButton();
         BotonMPC = new javax.swing.JButton();
+        Salir = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,10 +112,35 @@ public class Interfaz extends javax.swing.JFrame {
         BotonBucarAutor.setBackground(new java.awt.Color(255, 153, 0));
         BotonBucarAutor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         BotonBucarAutor.setText("Buscar");
+        BotonBucarAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonBucarAutorActionPerformed(evt);
+            }
+        });
 
         BotonMPC.setBackground(new java.awt.Color(255, 153, 102));
         BotonMPC.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         BotonMPC.setText("Mostrar palabras clave");
+        BotonMPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonMPCActionPerformed(evt);
+            }
+        });
+
+        Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Busca por autor las investigaciones");
+
+        jLabel3.setText("Busca por palabra clave la investigacion");
+
+        jLabel4.setText("Agrega un resumen, tiene que ser un txt");
+
+        jLabel5.setText("Deja que el sistema analize el resumen por ti");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,54 +151,69 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(130, 130, 130))
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addComponent(BotonMPC))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotonBucarAutor))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotonBuscarPC)))
+                .addContainerGap(143, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(182, 182, 182)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotonAnalizar)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BotonAgregar)
-                                .addGap(18, 18, 18)
-                                .addComponent(BotonAnalizar))
-                            .addComponent(BotonMPC)))
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotonAgregar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Field2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(BotonBucarAutor))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Field1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(BotonBuscarPC)))))
-                .addContainerGap(209, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(158, 158, 158)
+                        .addComponent(Salir)
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(BotonAgregar)
-                        .addComponent(BotonAnalizar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(45, 45, 45)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Field1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotonBuscarPC))
+                    .addComponent(jLabel1)
+                    .addComponent(Salir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(BotonAgregar))
+                .addGap(17, 17, 17)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(BotonAnalizar))
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonBuscarPC)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Field2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
                     .addComponent(BotonBucarAutor))
-                .addGap(47, 47, 47)
+                .addGap(11, 11, 11)
                 .addComponent(BotonMPC)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -172,11 +222,13 @@ public class Interfaz extends javax.swing.JFrame {
     private void BotonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarActionPerformed
 
     AgregarResumen agregarR = new AgregarResumen(newTablaHash);
-
     Resumen resumen = agregarR.cargarArchivo();
     if (resumen == null) return;
 
     newTablaHash.agregarElem(resumen);
+    for (String autor : resumen.getAutores()) {
+        arbolAutores.insertarOActualizar(autor, resumen); 
+    }
 
     JOptionPane.showMessageDialog(this, "Resumen agregado correctamente.");
         
@@ -241,7 +293,6 @@ public class Interfaz extends javax.swing.JFrame {
 
     String claveEstandarizada = palabraBuscada.trim().toLowerCase();
 
-    // Recorremos todos los resúmenes guardados en newTablaHash
     Lista todos = newTablaHash.obtenerTodos();
     Nodo actual = todos.getHead();
     Lista titulosEncontrados = new Lista();
@@ -252,7 +303,7 @@ public class Interfaz extends javax.swing.JFrame {
         for (String kw : keywords) {
             if (kw.toLowerCase().trim().equals(claveEstandarizada)) {
                 titulosEncontrados.addFinal(resumen.getTitulo());
-                break; // ya lo encontramos en este resumen
+                break; 
             }
         }
         actual = actual.getNext();
@@ -264,7 +315,7 @@ public class Interfaz extends javax.swing.JFrame {
         return;
     }
 
-    // Convertir lista en arreglo
+    //*Convertir lista en arreglo */
     int cantidad = titulosEncontrados.getSize();
     String[] titulosArray = new String[cantidad];
     Nodo nodo = titulosEncontrados.getHead();
@@ -309,6 +360,126 @@ public class Interfaz extends javax.swing.JFrame {
         "Detalles", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_BotonBuscarPCActionPerformed
 
+    private void BotonBucarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBucarAutorActionPerformed
+        String[] listaAutores = arbolAutores.inOrdenArray();
+        if (listaAutores.length == 0) {
+            JOptionPane.showMessageDialog(this, "No hay autores registrados.");
+            return;
+        }
+
+        String autorSeleccionado = (String) JOptionPane.showInputDialog(
+                this,
+                "Seleccione un autor:",
+                "Buscar por Autor",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                listaAutores,
+                listaAutores[0]);
+
+        if (autorSeleccionado == null) return;
+        Lista listaTitulos = arbolAutores.buscarTitulos(autorSeleccionado);
+        if (listaTitulos == null || listaTitulos.esVacia()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron investigaciones para el autor: " + autorSeleccionado);
+            return;
+        }
+
+        int cantidad = listaTitulos.getSize();
+        String[] titulosArray = new String[cantidad];
+        Nodo actual = listaTitulos.getHead();
+        int i = 0;
+        while (actual != null) {
+            titulosArray[i++] = (String) actual.getDato();
+            actual = actual.getNext();
+        }
+
+        String tituloSeleccionado = (cantidad > 1)
+            ? (String) JOptionPane.showInputDialog(this,
+                "El autor '" + autorSeleccionado + "' participa en " + cantidad + " investigaciones.\nSeleccione una:",
+                "Resultados de Búsqueda",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                titulosArray,
+                titulosArray[0])
+            : titulosArray[0];
+
+        if (tituloSeleccionado == null) return;
+
+        Resumen resumen = newTablaHash.buscarElem(tituloSeleccionado);
+        if (resumen == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el resumen para el título seleccionado.");
+            return;
+        }
+
+        StringBuilder detalle = new StringBuilder();
+        detalle.append("Título: ").append(resumen.getTitulo()).append("\n");
+        detalle.append("Autores: ");
+        String[] autores = resumen.getAutores();
+        for (int j = 0; j < autores.length; j++) {
+            detalle.append(autores[j]);
+            if (j < autores.length - 1) detalle.append(", ");
+        }
+        detalle.append("\n\nResumen:\n").append(resumen.getResumen());
+
+        JOptionPane.showMessageDialog(this, detalle.toString(), 
+            "Detalles", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_BotonBucarAutorActionPerformed
+
+    private void BotonMPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMPCActionPerformed
+        String[] listaPalabras = arbolPalabras.inOrdenArray();
+        if (listaPalabras.length == 0) {
+            JOptionPane.showMessageDialog(this, "No hay palabras clave registradas.");
+            return;
+        }
+
+        String palabraSeleccionada = (String) JOptionPane.showInputDialog(
+                this,
+                "Seleccione una palabra clave:",
+                "Listar Palabras Claves",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                listaPalabras,
+                listaPalabras[0]);
+
+        if (palabraSeleccionada == null) return;
+        Lista listaResúmenes = arbolPalabras.buscarResúmenes(palabraSeleccionada);
+        if (listaResúmenes == null || listaResúmenes.esVacia()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron investigaciones para la palabra: " + palabraSeleccionada);
+            return;
+        }
+        StringBuilder detalle = new StringBuilder();
+        detalle.append("Palabra clave: ").append(palabraSeleccionada).append("\n\n");
+
+        Nodo actual = listaResúmenes.getHead();
+        while (actual != null) {
+            Resumen resumen = (Resumen) actual.getDato();
+            int frecuencia = contarFrecuencia(resumen.getResumen().toLowerCase(), palabraSeleccionada.toLowerCase());
+            detalle.append("Título: ").append(resumen.getTitulo())
+                   .append(" → aparece ").append(frecuencia).append(" veces\n");
+            actual = actual.getNext();
+        }
+
+        JOptionPane.showMessageDialog(this, detalle.toString(), "Detalles de palabra clave", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_BotonMPCActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        try (PrintWriter pw = new PrintWriter(new FileWriter("resumenes_guardados.txt"))) {
+        Lista todos = newTablaHash.obtenerTodos();
+        Nodo actual = todos.getHead();
+        while (actual != null) {
+            Resumen resumen = (Resumen) actual.getDato();
+            pw.println("TITULO:" + resumen.getTitulo());
+            pw.println("AUTORES:" + String.join(",", resumen.getAutores()));
+            pw.println("RESUMEN:" + resumen.getResumen());
+            pw.println("PALABRAS:" + String.join(",", resumen.getKeyword()));
+            pw.println("----"); // separador
+            actual = actual.getNext();
+        }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error al guardar los resúmenes: " + e.getMessage());
+    }
+    System.exit(0);
+    }//GEN-LAST:event_SalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -350,9 +521,12 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton BotonBucarAutor;
     private javax.swing.JButton BotonBuscarPC;
     private javax.swing.JButton BotonMPC;
-    private javax.swing.JTextField Field1;
-    private javax.swing.JTextField Field2;
+    private javax.swing.JButton Salir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
