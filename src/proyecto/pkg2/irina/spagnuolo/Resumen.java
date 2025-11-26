@@ -5,7 +5,7 @@
 package proyecto.pkg2.irina.spagnuolo;
 
 /**
- *
+ *clase que maneja la info de los resumenes
  *
  */
 public class Resumen {

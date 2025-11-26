@@ -5,7 +5,7 @@
 package proyecto.pkg2.irina.spagnuolo;
 
 /**
- *
+ *Clas manejja la frecuencia de las palabras clave en los resumenes
  * 
  */
 public class Frecuencia {
@@ -61,6 +61,9 @@ public class Frecuencia {
         this.frecuencia = frecuencia;
     }
     
+    /**
+     * 
+     */
     public void incrementoF(){
         this.frecuencia++;
     }

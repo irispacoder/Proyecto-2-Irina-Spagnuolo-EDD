@@ -24,6 +24,10 @@ public class Autores {
         this.resumenes.addFinal(resumen);
     }
     
+    /**
+     * 
+     * @param resumen 
+     */
     public void addResumen(Resumen resumen){
         this.resumenes.addFinal(resumen);
     }

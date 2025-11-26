@@ -17,6 +17,10 @@ public class AgregarResumen {
         this.tablaHash = tablaHash;
     }
     
+    /**
+     * metodo para cargar el archivo txt con el resumen
+     * @return 
+     */
     public Resumen cargarArchivo(){
         JFileChooser fileC = new JFileChooser();
         fileC.setDialogTitle("Seleccione un archivo de resumen (que sea un .txt)");
@@ -29,6 +33,11 @@ public class AgregarResumen {
     }
     
     
+    /**
+     * este es el procesador del archivo osea el que lo leee y analiza si es el archivo permitido o no
+     * @param archivo
+     * @return 
+     */
     private Resumen procesarArchivo(File archivo){
         try(BufferedReader br = new BufferedReader(new FileReader(archivo))){
             String linea;

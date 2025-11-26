@@ -15,6 +15,7 @@ public class Proyecto2IrinaSpagnuolo {
      */
     public static void main(String[] args) {
         Interfaz inter = new Interfaz();
+        inter.setLocationRelativeTo(null);
         inter.setVisible(true);
     }
     

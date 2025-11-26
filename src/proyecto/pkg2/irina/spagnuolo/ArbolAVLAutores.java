@@ -20,14 +20,29 @@ public class ArbolAVLAutores {
         this.comparadorEspanol.setStrength(Collator.PRIMARY);
     }
 
+    /**
+     * 
+     * @param nodo
+     * @return 
+     */
     private int obtenerAltura(Autores nodo) {
         return (nodo == null) ? 0 : nodo.getAltura();
     }
 
+    /**
+     * 
+     * @param nodo
+     * @return 
+     */
     private int obtenerFactorBalanceo(Autores nodo) {
         return (nodo == null) ? 0 : obtenerAltura(nodo.getHijoIzquierdo()) - obtenerAltura(nodo.getHijoDerecho());
     }
 
+    /**
+     * 
+     * @param y
+     * @return 
+     */
     private Autores rotarDerecha(Autores y) {
         Autores x = y.getHijoIzquierdo();
         Autores T2 = x.getHijoDerecho();
@@ -41,6 +56,11 @@ public class ArbolAVLAutores {
         return x;
     }
 
+    /**
+     * 
+     * @param x
+     * @return 
+     */
     private Autores rotarIzquierda(Autores x) {
         Autores y = x.getHijoDerecho();
         Autores T2 = y.getHijoIzquierdo();
@@ -54,6 +74,11 @@ public class ArbolAVLAutores {
         return y;
     }
 
+    /**
+     * 
+     * @param actual
+     * @return 
+     */
     private Autores balancear(Autores actual) {
         actual.setAltura(1 + Math.max(obtenerAltura(actual.getHijoIzquierdo()), obtenerAltura(actual.getHijoDerecho())));
         int factorBalanceo = obtenerFactorBalanceo(actual);
@@ -79,10 +104,22 @@ public class ArbolAVLAutores {
         return actual;
     }
 
+    /**
+     * 
+     * @param autor
+     * @param resumen 
+     */
     public void insertarOActualizar(String autor, Resumen resumen) {
         raiz = insertarRecursivo(raiz, autor, resumen);
     }
 
+    /**
+     * 
+     * @param actual
+     * @param autor
+     * @param resumen
+     * @return 
+     */
     private Autores insertarRecursivo(Autores actual, String autor, Resumen resumen) {
         if (actual == null) {
             return new Autores(autor, resumen);
@@ -102,10 +139,21 @@ public class ArbolAVLAutores {
         return balancear(actual);
     }
 
+    /**
+     * 
+     * @param autor
+     * @return 
+     */
     public Autores buscar(String autor) {
         return buscarRecursivo(raiz, autor);
     }
 
+    /**
+     * 
+     * @param nodo
+     * @param autor
+     * @return 
+     */
     private Autores buscarRecursivo(Autores nodo, String autor) {
         if (nodo == null) return null;
         int cmp = comparadorEspanol.compare(autor, nodo.getNombreAutor());
@@ -114,10 +162,17 @@ public class ArbolAVLAutores {
         else return buscarRecursivo(nodo.getHijoDerecho(), autor);
     }
 
+    /**
+     * 
+     */
     public void recorrerInorden() {
         recorrerInordenRecursivo(raiz);
     }
 
+    /**
+     * 
+     * @param nodo 
+     */
     private void recorrerInordenRecursivo(Autores nodo) {
         if (nodo != null) {
             recorrerInordenRecursivo(nodo.getHijoIzquierdo());
@@ -126,6 +181,10 @@ public class ArbolAVLAutores {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String[] inOrdenArray() {
         int total = contarAutores(raiz);
         String[] autores = new String[total];
@@ -134,11 +193,22 @@ public class ArbolAVLAutores {
     
     }
     
+    /**
+     * 
+     * @param nodo
+     * @return 
+     */
     private int contarAutores(Autores nodo) {
         if (nodo == null) return 0;
         return 1 + contarAutores(nodo.getHijoIzquierdo()) + contarAutores(nodo.getHijoDerecho());
     }
     
+    /**
+     * 
+     * @param nodo
+     * @param autores
+     * @param index 
+     */
     private void llenarArrayInOrden(Autores nodo, String[] autores, int[] index) {
         if (nodo != null) {
             llenarArrayInOrden(nodo.getHijoIzquierdo(), autores, index);
@@ -147,6 +217,11 @@ public class ArbolAVLAutores {
         }
     }
     
+    /**
+     * 
+     * @param autor
+     * @return 
+     */
     public Lista buscarTitulos(String autor) {
         Autores nodo = buscar(autor);
         if (nodo == null) return null;

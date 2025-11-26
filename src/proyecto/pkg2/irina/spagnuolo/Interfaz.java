@@ -32,6 +32,10 @@ public class Interfaz extends javax.swing.JFrame {
         arbolPalabras = new ArbolPalabrasAVL();
     }
     
+    /**
+     * Ordena los titulos alfabeticamente
+     * @param titulos 
+     */
     private void ordenarTitulosABC(String[] titulos) {
         for (int i = 0; i < titulos.length - 1; i++) {
             for (int j = 0; j < titulos.length - i - 1; j++) {
@@ -44,6 +48,12 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Cuenta la frecuencia d ela s palabras
+     * @param texto
+     * @param palabra
+     * @return 
+     */
     private int contarFrecuencia(String texto, String palabra) {
         int contador = 0;
         int index = 0;
@@ -230,6 +240,7 @@ public class Interfaz extends javax.swing.JFrame {
         arbolAutores.insertarOActualizar(autor, resumen); 
     }
 
+
     JOptionPane.showMessageDialog(this, "Resumen agregado correctamente.");
         
     }//GEN-LAST:event_BotonAgregarActionPerformed
@@ -315,7 +326,9 @@ public class Interfaz extends javax.swing.JFrame {
         return;
     }
 
-    //*Convertir lista en arreglo */
+    /**
+     * Convertir lista en arreglo
+     */
     int cantidad = titulosEncontrados.getSize();
     String[] titulosArray = new String[cantidad];
     Nodo nodo = titulosEncontrados.getHead();
@@ -325,7 +338,6 @@ public class Interfaz extends javax.swing.JFrame {
         nodo = nodo.getNext();
     }
 
-    // Selección
     String tituloSeleccionado = (cantidad > 1)
         ? (String) JOptionPane.showInputDialog(this,
             "La palabra '" + palabraBuscada + "' aparece en " + cantidad + " investigaciones.\nSeleccione una:",
@@ -338,14 +350,12 @@ public class Interfaz extends javax.swing.JFrame {
 
     if (tituloSeleccionado == null) return;
 
-    // Buscar resumen completo por título
     Resumen resumen = newTablaHash.buscarElem(tituloSeleccionado);
     if (resumen == null) {
         JOptionPane.showMessageDialog(this, "No se encontró el resumen para el título seleccionado.");
         return;
     }
 
-    // Mostrar detalles
     StringBuilder detalle = new StringBuilder();
     detalle.append("Título: ").append(resumen.getTitulo()).append("\n");
     detalle.append("Autores: ");
@@ -471,7 +481,7 @@ public class Interfaz extends javax.swing.JFrame {
             pw.println("AUTORES:" + String.join(",", resumen.getAutores()));
             pw.println("RESUMEN:" + resumen.getResumen());
             pw.println("PALABRAS:" + String.join(",", resumen.getKeyword()));
-            pw.println("----"); // separador
+            pw.println("----"); 
             actual = actual.getNext();
         }
     } catch (IOException e) {

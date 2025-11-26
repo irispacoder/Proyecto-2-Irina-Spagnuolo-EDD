@@ -6,7 +6,7 @@ package proyecto.pkg2.irina.spagnuolo;
 
 /**
  *
- *
+ * Clase nodo
  * @param <T>
  */
 public class Nodo<T> {

@@ -21,15 +21,20 @@ public class Lista<T> {
         return getHead() == null;
     }
     
-    //esto agrega al inicio
+    /**
+     * sto agrega al inicio
+     * @param dato 
+     */
     public void addInicio(T dato){
         Nodo<T> newNodo = new Nodo<>(dato);
         newNodo.setNext(head);
         head = newNodo;
         size++;
     }
-    
-    //aqui se agrega al final
+    /**
+     * aqui se agrega al final
+     * @param dato 
+     */
     public void addFinal(T dato){
         Nodo<T> newNodo = new Nodo<>(dato);
         if (this.esVacia()) {
@@ -44,7 +49,11 @@ public class Lista<T> {
         size++;
     }
     
-    //metodo para buscar
+    /**
+     * metodo para buscar
+     * @param dato
+     * @return 
+     */
     public boolean searchElem(T dato){
         Nodo<T> actual = this.getHead();
         while (actual != null) {
@@ -56,6 +65,11 @@ public class Lista<T> {
         return false;
     }
     
+    /**
+     * 
+     * @param dato
+     * @return 
+     */
     public boolean eliminar(T dato){
         if (this.esVacia()) {
            return false; 

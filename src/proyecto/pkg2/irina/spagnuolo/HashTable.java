@@ -22,18 +22,35 @@ public class HashTable {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Lista[] getTabla() {
         return tabla;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getCapacidad() {
         return capacidad;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getTamaño() {
         return tamaño;
     }
 
+    /**
+     * 
+     * @param titulo
+     * @return 
+     */
     private int fHash(String titulo) {
         int hash = 0;
         for (int i = 0; i < titulo.length(); i++) {
@@ -42,6 +59,10 @@ public class HashTable {
         return hash % capacidad;
     }
 
+    /**
+     * 
+     * @param resumen 
+     */
     public void agregarElem(Resumen resumen) {
         int indice = fHash(resumen.getTitulo());
         if (!contiene(resumen.getTitulo())) {
@@ -51,6 +72,11 @@ public class HashTable {
     }
 
 
+    /**
+     * 
+     * @param titulo
+     * @return 
+     */
     public Resumen buscarElem(String titulo) {
         int indice = fHash(titulo);
         Nodo actual = tabla[indice].getHead();
@@ -65,10 +91,20 @@ public class HashTable {
         return null;
     }
 
+    /**
+     * 
+     * @param titulo
+     * @return 
+     */
     public boolean contiene(String titulo) {
         return buscarElem(titulo) != null;
     }
 
+    /**
+     * 
+     * @param titulo
+     * @return 
+     */
     public boolean eliminarElem(String titulo) {
         int indice = fHash(titulo);
         Nodo actual = tabla[indice].getHead();
@@ -85,6 +121,10 @@ public class HashTable {
         return false;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Lista obtenerTodos() {
         Lista todos = new Lista();
         for (int i = 0; i < capacidad; i++) {
@@ -97,6 +137,10 @@ public class HashTable {
         return todos;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public String[] obtenerTitulos() {
         String[] titulos = new String[tamaño];
         int index = 0;
@@ -112,6 +156,12 @@ public class HashTable {
         return titulos;
     }
 
+    /**
+     * 
+     * @param titulo1
+     * @param titulo2
+     * @return 
+     */
     private boolean compararTitulos(String titulo1, String titulo2) {
         if (titulo1 == null && titulo2 == null) return true;
         if (titulo1 == null || titulo2 == null) return false;
@@ -123,10 +173,20 @@ public class HashTable {
         return true;
     }
     
+    /**
+     * 
+     * @param clave
+     * @param valor 
+     */
     public void insertar(String clave, Object valor){
         int indice = fHash(clave);
     }
     
+    /**
+     * 
+     * @param clave
+     * @return 
+     */
     public Object buscar(String clave){
         int indice = fHash(clave);
         return null;

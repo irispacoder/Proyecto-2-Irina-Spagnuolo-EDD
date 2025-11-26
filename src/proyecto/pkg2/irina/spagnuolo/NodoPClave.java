@@ -6,7 +6,7 @@ package proyecto.pkg2.irina.spagnuolo;
 
 /**
  *
- * 
+ * Esta clase es para poder manejar los nodos de las palabras
  */
 public class NodoPClave {
     private String pClave;
@@ -26,6 +26,10 @@ public class NodoPClave {
         this.frecuenciaLista.addFinal(primeraFrecuencia);
     }
     
+    /**
+     * Este es el metodo para actualizar la frecuencia
+     * @param claveResumen 
+     */
     public void Factualizada(String claveResumen){
         Nodo<Frecuencia> actual = this.frecuenciaLista.getHead();
         while (actual != null) {
@@ -42,6 +46,10 @@ public class NodoPClave {
     
     }
     
+    /**
+     * Obtiene los titulos de los resumenes
+     * @return 
+     */
     public String[] getTitulos() {
         int count = frecuenciaLista.getSize();
         String[] titulos = new String[count];

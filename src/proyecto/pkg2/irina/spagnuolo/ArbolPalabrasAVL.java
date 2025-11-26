@@ -20,14 +20,29 @@ public class ArbolPalabrasAVL {
         this.comparadorEspanol.setStrength(Collator.PRIMARY);
     }
 
+    /**
+     * 
+     * @param nodo
+     * @return 
+     */
     private int obtenerAltura(NodoPClave nodo) {
         return (nodo == null) ? 0 : nodo.getHeight();
     }
     
+    /**
+     * 
+     * @param nodo
+     * @return 
+     */
     private int obtenerBalance(NodoPClave nodo) {
         return (nodo == null) ? 0 : obtenerAltura(nodo.getHijoIZ()) - obtenerAltura(nodo.getHijoDE());
     }
 
+    /**
+     * 
+     * @param y
+     * @return 
+     */
     private NodoPClave rotacionDerecha(NodoPClave y) {
         NodoPClave x = y.getHijoIZ();
         NodoPClave T2 = x.getHijoDE();
@@ -41,6 +56,11 @@ public class ArbolPalabrasAVL {
         return x;
     }
 
+    /**
+     * 
+     * @param x
+     * @return 
+     */
     private NodoPClave rotacionIzquierda(NodoPClave x) {
         NodoPClave y = x.getHijoDE();
         NodoPClave T2 = y.getHijoIZ();
@@ -54,11 +74,23 @@ public class ArbolPalabrasAVL {
         return y;
     }
 
+    /**
+     * 
+     * @param palabra
+     * @param claveResumen 
+     */
     public void insertarOActualizar(String palabra, String claveResumen) {
         palabra = palabra.toLowerCase().trim();
         this.raiz = insertarRecursivo(this.raiz, palabra, claveResumen);
     }
 
+    /**
+     * 
+     * @param actual
+     * @param palabra
+     * @param claveResumen
+     * @return 
+     */
     private NodoPClave insertarRecursivo(NodoPClave actual, String palabra, String claveResumen) {
         if (actual == null) {
             return new NodoPClave(palabra, claveResumen);
@@ -97,10 +129,21 @@ public class ArbolPalabrasAVL {
         return actual;
     }
 
+    /**
+     * 
+     * @param palabra
+     * @return 
+     */
     public boolean buscar(String palabra) {
         return buscarRecursivo(raiz, palabra);
     }
 
+    /**
+     * 
+     * @param nodo
+     * @param palabra
+     * @return 
+     */
     private boolean buscarRecursivo(NodoPClave nodo, String palabra) {
         if (nodo == null) return false;
         int cmp = comparadorEspanol.compare(palabra, nodo.getpClave());
@@ -109,6 +152,11 @@ public class ArbolPalabrasAVL {
         else return buscarRecursivo(nodo.getHijoDE(), palabra);
     }
     
+    /**
+     * 
+     * @param palabra
+     * @return 
+     */
     public String[] getTitulosPorPalabra(String palabra) {
         palabra = palabra.toLowerCase().trim();
         NodoPClave nodo = buscarNodo(raiz, palabra);
@@ -116,6 +164,12 @@ public class ArbolPalabrasAVL {
         return nodo.getTitulos(); 
     }
     
+    /**
+     * 
+     * @param actual
+     * @param palabra
+     * @return 
+     */
     private NodoPClave buscarNodo(NodoPClave actual, String palabra) {
         if (actual == null) return null;
         int cmp = comparadorEspanol.compare(palabra, actual.getpClave());
@@ -124,9 +178,16 @@ public class ArbolPalabrasAVL {
         else return buscarNodo(actual.getHijoDE(), palabra);
     }
     
+    /**
+     * 
+     */
     public void inOrden(){
         inOrdenRecursivo(raiz);
     }
+    /**
+     * 
+     * @param Nodo 
+     */
     private void inOrdenRecursivo(NodoPClave Nodo){
         if (Nodo != null) {
             inOrdenRecursivo(Nodo.getHijoIZ());
@@ -134,6 +195,10 @@ public class ArbolPalabrasAVL {
         }
     }
     
+    /**
+     * 
+     * @return 
+     */
     public String[] inOrdenArray() {
         int total = contarPalabras(raiz);
         String[] palabras = new String[total];
@@ -146,6 +211,12 @@ public class ArbolPalabrasAVL {
         return 1 + contarPalabras(nodo.getHijoIZ()) + contarPalabras(nodo.getHijoDE());
     }
 
+    /**
+     * 
+     * @param nodo
+     * @param palabras
+     * @param index 
+     */
     private void llenarArrayInOrden(NodoPClave nodo, String[] palabras, int[] index) {
         if (nodo != null) {
             llenarArrayInOrden(nodo.getHijoIZ(), palabras, index);
@@ -154,11 +225,22 @@ public class ArbolPalabrasAVL {
         }
     }
 
+    /**
+     * 
+     * @param palabra
+     * @return 
+     */
     public Lista buscarResúmenes(String palabra) {
         NodoPClave nodo = buscarRec(raiz, palabra);
         return (nodo == null) ? null : nodo.getFrecuenciaLista();
     }
 
+    /**
+     * 
+     * @param nodo
+     * @param palabra
+     * @return 
+     */
     private NodoPClave buscarRec(NodoPClave nodo, String palabra) {
         if (nodo == null) return null;
         int cmp = comparadorEspanol.compare(palabra, nodo.getpClave());
